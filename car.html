@@ -189,11 +189,11 @@
             }
           }
       
-          // Reposition enemy car if it goes off-screen
+          
           if (enemyCar.y >= 750) {
             enemyCar.y = -300
             enemyCar.style.left = Math.floor(Math.random() * 350) + 'px'
-            enemyCar.scoreIncremented = false // Reset the flag
+            enemyCar.scoreIncremented = false // reset the flag
             console.log('Enemy car repositioned and flag reset')
           }
       
