@@ -113,16 +113,31 @@
       
       startScreen.addEventListener('click', initializeGame)
       
-      let player = { speed: 5, score: 0 }
-      
-      // Function to increase player speed
+      let player = { speed: 5, score: 0, start: false };
+      let speedInterval;
+
+     // function to increase speed
       function increaseSpeed() {
-        player.speed += 1
-        console.log(`Player speed increased to: ${player.speed}`)
+        if (player.start) {
+          player.speed += 1;
+          console.log(`Player speed increased to: ${player.speed}`);
+        }
+      }
+
+         /* this function ensures that there is only one speedinterval, 
+         if there exists one it will clear it and set up,
+         a new one */
+      function startSpeedInterval() {
+        if (speedInterval) {
+          clearInterval(speedInterval);
+        }
+        
+        speedInterval = setInterval(increaseSpeed, 5000);
       }
       
-      // Increase speed every 5 seconds (5000 milliseconds)
-      setInterval(increaseSpeed, 5000)
+     
+      
+      
       
       let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false }
       
@@ -161,6 +176,7 @@
         player.start = false
         startScreen.classList.remove('hide')
         startScreen.innerHTML = 'Game over <br> Your final socre is ' + player.score + ' <br> press here to restart the game.'
+        clearInterval(speedInterval); // Clear the interval when the game ends
       }
       
       function moveEnemy(myCar) {
@@ -264,6 +280,8 @@
           enemyCar.style.left = Math.floor(Math.random() * 350) + 'px'
           gameArea.appendChild(enemyCar)
         }
+
+        startSpeedInterval(); // Start the speed interval when the game initializes
       }
     </script>
   </body>
